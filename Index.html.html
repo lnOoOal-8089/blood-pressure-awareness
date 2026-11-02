@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f1e8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>رسالة إلى قلبك | بطاقة توعوية</title>
+<style>
+  :root {
+    --cream: #f5f1e8;
+    --paper: #fffdf8;
+    --green: #283326;
+    --sage: #d8dfc9;
+    --sage-dark: #829078;
+    --red: #b95750;
+    --ink: #263027;
+    --muted: #687166;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 24px 16px;
+    display: grid; place-items: center;
+    background:
+      radial-gradient(circle at 12% 12%, rgba(216,223,201,.7), transparent 27%),
+      radial-gradient(circle at 88% 82%, rgba(185,87,80,.10), transparent 24%),
+      var(--cream);
+    color: var(--ink);
+    font-family: "Tajawal", sans-serif;
+  }
+  .app { width: min(100%, 430px); text-align: center; }
+  .eyebrow { margin: 0 0 9px; color: var(--sage-dark); font-size: .78rem; letter-spacing: .08em; }
+  h1 { font-family: "Alexandria", sans-serif; font-weight: 700; letter-spacing: -0.04em; margin: 0; font-size: clamp(1.7rem, 7vw, 2.25rem); color: var(--green); }
+  .intro { margin: 12px auto 22px; max-width: 320px; line-height: 1.9; color: var(--muted); font-size: .96rem; }
+  .scene { min-height: 270px; display: grid; place-items: center; perspective: 900px; }
+  .envelope-wrap { position: relative; width: min(82vw, 330px); height: 205px; cursor: pointer; outline: none; }
+  .envelope-wrap:focus-visible { outline: 3px solid var(--red); outline-offset: 8px; border-radius: 12px; }
+  .envelope-back {
+    position: absolute; inset: 18px 0 0; border-radius: 9px;
+    background: #d9dfcf; box-shadow: 0 18px 34px rgba(40,51,38,.13);
+  }
+  .letter {
+    position: absolute; z-index: 1; left: 7%; right: 7%; bottom: 10px; height: 165px;
+    padding: 18px 14px; background: var(--paper); border: 1px solid #e7e4d9;
+    border-radius: 8px; transition: transform .85s cubic-bezier(.2,.8,.2,1), height .85s;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+  }
+  .letter .mini-heart { color: var(--red); font-size: 1.5rem; margin-bottom: 8px; }
+  .letter strong { font-family: "Alexandria", sans-serif; font-weight: 600; color: var(--green); font-size: 1.05rem; }
+  .letter small { color: var(--muted); margin-top: 8px; line-height: 1.7; }
+  .envelope-front {
+    position: absolute; z-index: 3; inset: 18px 0 0; overflow: hidden; border-radius: 9px;
+    background: linear-gradient(145deg, #e7eadf, #cbd5bf);
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  }
+  .envelope-flap {
+    position: absolute; z-index: 4; top: 18px; left: 0; right: 0; height: 58%;
+    background: #bac7ad; clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center; transition: transform .65s ease, z-index .01s .3s;
+    filter: drop-shadow(0 3px 2px rgba(40,51,38,.08));
+  }
+  .seal {
+    position: absolute; z-index: 5; top: 87px; left: 50%; transform: translateX(-50%);
+    width: 43px; height: 43px; display: grid; place-items: center; border-radius: 50%;
+    background: var(--red); color: white; font-size: 1.1rem; box-shadow: 0 4px 10px #9b51463b;
+    transition: opacity .25s, transform .35s;
+  }
+  .tap-label { position: absolute; z-index: 6; bottom: -30px; left: 0; right: 0; font-size: .83rem; color: var(--green); }
+  .envelope-wrap.open .letter { transform: translateY(-104px); height: 190px; }
+  .envelope-wrap.open .envelope-flap { transform: rotateX(180deg); z-index: 0; }
+  .envelope-wrap.open .seal { opacity: 0; transform: translateX(-50%) scale(.6); }
+  .envelope-wrap.open .tap-label { opacity: 0; }
+  .content-card {
+    display: none; text-align: right; margin: 18px 0 0; padding: 23px;
+    border-radius: 18px; background: rgba(255,253,248,.96);
+    border: 1px solid #e6e3d7; box-shadow: 0 15px 35px rgba(40,51,38,.08);
+    animation: rise .55s ease both;
+  }
+  .content-card.visible { display: block; }
+  @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  .tag { font-weight: 700; display: inline-block; background: var(--sage); color: var(--green); border-radius: 999px; padding: 6px 11px; font-size: .75rem; }
+  .content-card h2 { font-family: "Alexandria", sans-serif; font-weight: 700; letter-spacing: -0.035em; margin: 12px 0 8px; color: var(--green); font-size: 1.45rem; }
+  .content-card p { line-height: 1.9; margin: 8px 0; }
+  .reading { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 17px 0; }
+  .number-box { padding: 13px 8px; background: #f1f3eb; border-radius: 12px; text-align: center; }
+  .number-box b { display: block; color: var(--green); font-size: 1.5rem; margin-bottom: 5px; }
+  .number-box span { color: var(--muted); font-size: .83rem; }
+  .tips { padding-right: 20px; line-height: 1.9; }
+  .note { padding: 12px 14px; border-right: 3px solid var(--red); background: #fbf1ed; border-radius: 8px; font-size: .87rem; }
+  .actions { display: flex; gap: 9px; margin-top: 17px; }
+  button { font: inherit; border: 0; border-radius: 10px; padding: 12px 14px; cursor: pointer; }
+  .primary { background: var(--green); color: white; flex: 1; }
+  .secondary { background: var(--sage); color: var(--green); }
+  .footer { color: var(--muted); font-size: .74rem; line-height: 1.7; margin: 20px 8px 0; }
+  .footer a { color: var(--green); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+<main class="app">
+  <p class="eyebrow">بطاقة توعوية تفاعلية</p>
+  <h1>رسالة إلى قلبك</h1>
+  <p class="intro">أحيانًا، تبدأ العناية بصحتنا بسؤال صغير.<br>افتح الرسالة واكتشف لماذا يستحق ضغط دمك انتباهك.</p>
+
+  <section class="scene" aria-label="ظرف رسالة تفاعلي">
+    <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="افتح الرسالة" aria-expanded="false">
+      <div class="envelope-back"></div>
+      <div class="letter">
+        <div class="mini-heart">♥</div>
+        <strong>إلى شخص يهتم بصحته</strong>
+        <small>هناك شيء يستحق أن تعرفه عن ضغط الدم…</small>
+      </div>
+      <div class="envelope-front"></div>
+      <div class="envelope-flap"></div>
+      <div class="seal">♥</div>
+      <div class="tap-label">اضغط لفتح الرسالة</div>
+    </div>
+  </section>
+
+  <section class="content-card" id="card" aria-live="polite">
+    <span class="tag">دقيقة لصحتك</span>
+    <h2>اعرف أرقامك</h2>
+    <p>ضغط الدم هو قوة دفع الدم على جدران الشرايين. وتُكتب القراءة برقمين:</p>
+    <div class="reading">
+      <div class="number-box"><b>الرقم العلوي</b><span>الضغط الانقباضي: أثناء انقباض القلب</span></div>
+      <div class="number-box"><b>الرقم السفلي</b><span>الضغط الانبساطي: بين النبضات</span></div>
+    </div>
+    <p><strong>لماذا نهتم به؟</strong> قد لا يسبب ارتفاع ضغط الدم أعراضًا واضحة، لذا يساعد القياس والمتابعة على اكتشافه والتعامل معه.</p>
+    <p><strong>ثلاث خطوات بسيطة:</strong></p>
+    <ul class="tips">
+      <li>اجلس بهدوء خمس دقائق قبل القياس.</li>
+      <li>استخدم جهازًا مناسبًا، واجعل ذراعك مسنودة بمستوى القلب.</li>
+      <li>دوّن قراءاتك وناقشها مع مختص صحي؛ فالقراءة الواحدة لا تكفي دائمًا للتشخيص.</li>
+    </ul>
+    <div class="note">إذا ظهرت قراءة مرتفعة جدًا، أعد القياس بعد الراحة واطلب المشورة الطبية. وإذا صاحبتها أعراض شديدة مثل ألم الصدر أو ضيق النفس أو ضعف مفاجئ، فاطلب الرعاية الطارئة.</div>
+    <div class="actions">
+      <button class="primary" id="sourceBtn">عرض مصدر للمزيد</button>
+      <button class="secondary" id="closeBtn">إغلاق الرسالة</button>
+    </div>
+  </section>
+  <p class="footer">نموذج تجريبي للتصميم والتدريب، وليس بديلًا عن الاستشارة الطبية. للمعلومات الإضافية: <a href="https://www.who.int/news-room/fact-sheets/detail/hypertension" target="_blank" rel="noopener">منظمة الصحة العالمية — ارتفاع ضغط الدم</a>.</p>
+</main>
+<script>
+  const envelope = document.getElementById('envelope');
+  const card = document.getElementById('card');
+  function openLetter() {
+    envelope.classList.add('open');
+    envelope.setAttribute('aria-expanded', 'true');
+    window.setTimeout(() => {
+      card.classList.add('visible');
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 430);
+  }
+  function closeLetter() {
+    card.classList.remove('visible');
+    envelope.classList.remove('open');
+    envelope.setAttribute('aria-expanded', 'false');
+    envelope.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  envelope.addEventListener('click', openLetter);
+  envelope.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openLetter();
+    }
+  });
+  document.getElementById('closeBtn').addEventListener('click', closeLetter);
+  document.getElementById('sourceBtn').addEventListener('click', () => {
+    window.open('https://www.who.int/news-room/fact-sheets/detail/hypertension', '_blank', 'noopener');
+  });
+</script>
+</body>
+</html>
